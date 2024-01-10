@@ -1,0 +1,20 @@
+version: 2
+
+models:
+  - name: int_stock_sales
+    columns:
+      - name: qty
+        tests:
+          - qty_conservation:
+              another_model: ref('stg_raw__sales')
+              another_column: qty
+          - qty_conservation:
+              another_model: ref('int_sales_monthly')
+              another_column: qty
+    tests:
+      - dbt_utils.equal_rowcount:
+          compare_model: ref('stg_raw__sales')
+      - dbt_expectations.expect_table_aggregation_to_equal_other_table:
+          expression: sum(qty)
+          compare_model: ref("stg_raw__sales")
+          compare_expression: sum(qty)

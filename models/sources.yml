@@ -8,3 +8,14 @@ sources:
         identifier: raw_cc_sales
       - name: stock
         identifier: raw_cc_stock
+        columns:
+          - name: model
+            tests:
+              - not_null
+          - name: size
+            tests:
+              - not_null
+          - name: color
+            tests:
+              - not_null
+              - notcolor
